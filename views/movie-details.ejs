@@ -1,0 +1,45 @@
+<%- include('header.ejs') %>
+
+<div class="container">
+    <div class="movie-details-screen">
+
+        <!-- Side nav Code START -->
+
+        <div class="movie-side-nav">
+            <img src="<%= movieData.Poster %>" alt="title">
+            <div class="sidebar-content">
+                <h2><%= movieData.Title %> </h2>
+                <div class="sidebar-content-inner">
+                    <p>Type: <%= movieData.Type %></p>
+                    <span class="vertical-bar"></span>
+                    <p>Year: <%= movieData.Year %></p>
+                </div>
+            </div>    
+        </div>
+        <!-- Side nav Code END -->
+
+        <!-- main content code START-->
+        <div class="movie-details-content">
+            <h1>About the Movie</h1>
+            <h2><%= movieData.Title %></h2>
+            <div class="movie-details-content-inner">
+                <p>Genre : <%= movieData.Genre %></p>
+                <span class="vertical-bar"></span>
+                <p>Type : <%= movieData.Type %></p>
+                <span class="vertical-bar"></span>
+                <p>Year : <%= movieData.Year %></p>
+            </div>
+            <h2>Plot</h2>
+            <p>Plot : <%= movieData.Plot %></p>
+            <div class="movie-casts">
+                <h3>Cast</h3>
+                <p><%= movieData.Actors %></p>
+            </div>
+        </div>
+        <!-- main content code END-->
+
+    </div>
+</div>
+
+
+<%- include('footer.ejs') %>
