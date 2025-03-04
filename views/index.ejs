@@ -9,7 +9,7 @@
         <h1>Watched movies</h1>
 <% moviesDetails.forEach(movie => {%> 
     <div class="entry">
-        <a href="view/:id">
+        <a href="view/<%= movie.imdbID%>">
             <ul>
                 <li><img src="<%=movie.Poster %>" alt=""></li>
                 <li>Title <br> <%=movie.Title %> </li>
