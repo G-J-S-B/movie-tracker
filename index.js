@@ -47,10 +47,39 @@ async function getMovieDetails(name, id) {
     }
 }
 
+async function getMovieDetailsBasedOnId(id) {
+    let moviesImdbID;
+    let moviesList = [];
+    
+    try {
+        moviesImdbID = (await db.query('SELECT imdbid FROM watched_movies WHERE user_id = $1;', [id])).rows;
+    } catch (error) {
+        console.error(error)
+    }
 
-app.get('/', (req, res) =>{
+    moviesImdbID.forEach(async row => {
+        const apiUrl = 'http://www.omdbapi.com/';
+        const apiKey = '?apikey=f8adfcaa';
+        const imdbid = '&i='+ row.imdbid;
+        try {
+            const response = await axios.get(apiUrl + apiKey + imdbid);
+            moviesList.push(response.data);
+        } catch (error) {
+            console.error(error)
+        }
+    });
+
+    return moviesList;
+}
+
+
+app.get('/', async (req, res) =>{
     let message = "Hello World!"
     res.render('index.ejs', {message})
+
+    const moviesDetails = await getMovieDetailsBasedOnId(currentUserId);
+    console.log (moviesDetails)
+    
 });
 
 
@@ -61,8 +90,7 @@ app.get('/search', async (req ,res) => {
 
     try {
         movieData = await getMovieDetails(movieName, movieImdbId);
-        res.render('movie-details.ejs', {movieData, somethingWentWrong: true})
-
+        res.render('movie-details.ejs', {movieData})
     } catch (error) {
         console.error(error);
     }  
