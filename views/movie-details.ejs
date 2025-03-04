@@ -1,10 +1,18 @@
 <%- include('header.ejs') %>
 
-<div class="container">
-    <div class="movie-details-screen">
+<div>
+    <% if (locals.movieAddedToWatched) { %>
+        <% if (movieAddedToWatched.status === "success") { %>
+            <p><%= movieAddedToWatched.message %></p>
+        <% } else if (movieAddedToWatched.status === "failed") { %>
+            <p><%= movieAddedToWatched.message %></p>
+        <% } %>
+    <% } %>
+</div>
 
+<div class="container">  
         <!-- Side nav Code START -->
-
+<div class="movie-details-screen">
         <div class="movie-side-nav">
             <img src="<%= movieData.Poster %>" alt="title">
             <div class="sidebar-content">
@@ -27,7 +35,7 @@
                 <span class="vertical-bar"></span>
                 <p>Type : <%= movieData.Type %></p>
                 <span class="vertical-bar"></span>
-                <p>Year : <%= movieData.Year %></p>
+                <p>Released : <%= movieData.Released %></p>
             </div>
             <h2>Plot</h2>
             <p>Plot : <%= movieData.Plot %></p>
@@ -35,11 +43,18 @@
                 <h3>Cast</h3>
                 <p><%= movieData.Actors %></p>
             </div>
+            <div class="movie-buttons">
+                <a class="watchlist-btn" href="/add-to-watchlist" id="mark-to-watch">Add to Watchlist</a>
+                <a class="watched-btn" href="/add-to-watched" id="mark-watched">Watched</a>
+            </div>
         </div>
         <!-- main content code END-->
-
     </div>
 </div>
 
-
+<script>
+    function asd(){
+        
+    };
+</script>
 <%- include('footer.ejs') %>

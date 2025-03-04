@@ -9,40 +9,77 @@ import ejs from 'ejs'
 
 const app = express();
 const port = 3000;
-const apiUrl= 'http://www.omdbapi.com/';
-const apiKey = '?apikey=f8adfcaa';
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const db = new pg.Client({
-
+    host: 'localhost',
+    database: "movie_tracker",
+    user: "postgres",
+    password:"3L!Te1999!",
+    port: 5432,
 });
 
+db.connect();
+
+let currentUserId = 1;
 let movieData = {};
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')));
 
+async function getMovieDetails(name, id) {
+    const apiUrl = 'http://www.omdbapi.com/';
+    const apiKey = '?apikey=f8adfcaa';
+    try {
+        if (name && !id) {
+            const movieName = `&t=${name}`;
+            const response = await axios.get(apiUrl + apiKey + movieName);
+            return response.data;
+        } else if (id && !name) {
+            const imdbid = `&i=${id}`;
+            const response = await axios.get(apiUrl + apiKey + imdbid);
+            return response.data;
+        } else {
+            throw new Error("Either 'name' or 'imdbid' should be provided, but not both.");
+        }
+    } catch (error) {
+        console.error("Error fetching movie details:", error);
+        throw error; //
+    }
+}
+
 
 app.get('/', (req, res) =>{
-    res.render('index.ejs', {message: 'Hello World'})
+    let message = "Hello World!"
+    res.render('index.ejs', {message})
 });
 
-app.get('/movie-details', (req ,res) => {
-    res.render ('movie-details.ejs', {movieData})
-})
 
-app.post('/find-movie', (req, res) => {
-    const movieName = '&t=' + req.body.search;
-    axios.get(apiUrl + apiKey + movieName)
-    .then(function (response) {
-        movieData = response.data;
-    })
-    .catch(function (error) {
+app.get('/search', async (req ,res) => {
+    
+    const movieName = req.query.movie_name; 
+    const movieImdbId = req.params.id;
+
+    try {
+        movieData = await getMovieDetails(movieName, movieImdbId);
+        res.render('movie-details.ejs', {movieData, somethingWentWrong: true})
+
+    } catch (error) {
         console.error(error);
-    })
-    .finally(function () {
-        res.redirect('/movie-details');
-    });
+    }  
+});
 
+app.get('/add-to-watched', async (req, res) => {
+    const userId = currentUserId;
+    const movieId = movieData.imdbID;
+
+    console.log(userId);
+    console.log(movieId)
+    try {
+        await db.query('INSERT INTO public.watched_movies(user_id, imdbid) VALUES ($1, $2)', [userId, movieId])
+    } catch (error){
+        console.error(error);
+    }
+    res.redirect('/')
 })
 
 app.listen(port, () => {
