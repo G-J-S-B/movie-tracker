@@ -57,28 +57,27 @@ async function getMovieDetailsBasedOnId(id) {
         console.error(error)
     }
 
-    moviesImdbID.forEach(async row => {
-        const apiUrl = 'http://www.omdbapi.com/';
-        const apiKey = '?apikey=f8adfcaa';
-        const imdbid = '&i='+ row.imdbid;
+    for (const row of moviesImdbID) {
         try {
+            const apiUrl = 'http://www.omdbapi.com/';
+            const apiKey = '?apikey=f8adfcaa';
+            const imdbid = '&i=' + row.imdbid;
+
             const response = await axios.get(apiUrl + apiKey + imdbid);
             moviesList.push(response.data);
         } catch (error) {
-            console.error(error)
+            console.error(`Failed to fetch details for ${row.imdbid}:`, error);
         }
-    });
-
+    }
     return moviesList;
 }
 
 
 app.get('/', async (req, res) =>{
     let message = "Hello World!"
-    res.render('index.ejs', {message})
-
-    const moviesDetails = await getMovieDetailsBasedOnId(currentUserId);
-    console.log (moviesDetails)
+    let moviesDetails = await getMovieDetailsBasedOnId(currentUserId);
+    console.log(moviesDetails)
+    res.render('index.ejs', {moviesDetails, message: "Hello World"})
     
 });
 
@@ -89,19 +88,17 @@ app.get('/search', async (req ,res) => {
     const movieImdbId = req.params.id;
 
     try {
-        movieData = await getMovieDetails(movieName, movieImdbId);
-        res.render('movie-details.ejs', {movieData})
+        movieData = await getMovieDetails(movieName, movieImdbId);     
     } catch (error) {
         console.error(error);
     }  
+    res.render('movie-details.ejs', {movieData})
 });
 
 app.get('/add-to-watched', async (req, res) => {
     const userId = currentUserId;
     const movieId = movieData.imdbID;
 
-    console.log(userId);
-    console.log(movieId)
     try {
         await db.query('INSERT INTO public.watched_movies(user_id, imdbid) VALUES ($1, $2)', [userId, movieId])
     } catch (error){
