@@ -52,7 +52,7 @@ async function getMovieDetailsBasedOnId(id) {
     let moviesList = [];
     
     try {
-        moviesImdbID = (await db.query('SELECT imdbid FROM watched_movies WHERE user_id = $1;', [id])).rows;
+        moviesImdbID = (await db.query('SELECT imdbid FROM watched_movies WHERE user_id = $1 ORDER BY id DESC;', [id])).rows;
     } catch (error) {
         console.error(error)
     }
