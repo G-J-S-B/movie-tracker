@@ -8,6 +8,7 @@
 body{
     position: relative;
     min-height: 100vh;
+    background-color: #e3e3e3;
 }
 
 h1, 
@@ -121,7 +122,7 @@ footer {
     display: flex;
     justify-content: center;
     width: 80%;
-    height: 70vh;
+    height: 74vh;
     margin: auto;
     padding: 10px 0px;
 }
@@ -146,7 +147,9 @@ footer {
     margin: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
+
 /* movie details content  */
 .movie-details-content {
     display: flex;
@@ -154,8 +157,6 @@ footer {
     padding: 30px 20px;
     width: 40%;
 }
-
-
 
 .movie-details-content-inner{
     display: flex;
@@ -176,16 +177,100 @@ footer {
 .movie-details-content h2:first-child {
     font-size: 28px !important;
 }
+
 .vertical-bar{
     display: block;
     background-color: #202020;
     height: 10px;
     width: 1px;
 }
-.movie-details-content p{
+.movie-details-content p,
+.movie-side-nav p{
     text-align: justify;
+    color: #424242;
 }
 
 .movie-casts{
     margin-top: auto;
+}
+
+/* Move details buttons styles  */
+
+.movie-buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.watchlist-btn{
+    border-radius: 20px;
+    padding: 5px 15px;
+    background-color: #002c64;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.watchlist-btn:hover{
+    cursor: pointer;
+}
+
+.watched-btn{
+    border-radius: 20px;
+    padding: 5px 15px;
+    background-color: #0c6600;
+    color: white;
+    margin-left: 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.watched-btn:hover{
+    cursor: pointer;
+}
+
+/* Watched List CSS */
+
+.watched-list{
+    width: 65%;
+    margin: 40px auto;
+}
+.entry{
+    margin: 10px;
+    border-bottom: 1px solid #202020;
+}
+
+.entry:last-child{
+    border-bottom: 0;
+}
+
+.entry a{
+    text-decoration: none;
+    color: black;
+}
+
+.entry ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+}
+
+.entry ul li{
+    
+    width: 100%;
+    padding: 15px;
+    border-right: 1px solid #202020 ;
+}
+
+.entry ul li:first-child{
+    text-align: center;
+}
+
+.entry ul li:last-child {
+    border-right: 0;
+}
+
+.entry img{
+    height: 150px;
 }

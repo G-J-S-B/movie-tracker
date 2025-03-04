@@ -4,5 +4,22 @@
     <h1><%= message %></h1>
 </div>
 
+<div class="container"></div>
+    <div class="watched-list">
+        <h1>Watched movies</h1>
+<% moviesDetails.forEach(movie => {%> 
+    <div class="entry">
+        <a href="view/:id">
+            <ul>
+                <li><img src="<%=movie.Poster %>" alt=""></li>
+                <li>Title <br> <%=movie.Title %> </li>
+                <li>Genre <br> <%=movie.Genre %> </li>
+                <li>Release Date <br> <%=movie.Released %> </li>
+            </ul>
+        </a>
+    </div>
+<%}); %>    
+    </div>
+</div>
 
 <%- include('footer.ejs') %>
