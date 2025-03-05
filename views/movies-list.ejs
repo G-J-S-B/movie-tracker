@@ -1,0 +1,28 @@
+<%- include('header.ejs') %>
+
+<div class="main">
+    <div class="container">
+        <div class="watched-list">
+            <h1>Watched movies</h1>
+    <% moviesDetails.forEach(movie => {%> 
+        <div class="entry">
+         <% if (listType == 'watched-movies') {%>
+            <a href="/watched-movies/view/<%= movie.imdbID%>">
+            <% } 
+            else if (listType == 'watch-list') {%>
+            <a href="/watch-list/view/<%= movie.imdbID%>">
+        <% }%>
+
+                <ul>
+                    <li><img src="<%=movie.Poster %>" alt=""></li>
+                    <li>Title <br> <%=movie.Title %> </li>
+                    <li>Genre <br> <%=movie.Genre %> </li>
+                    <li>Release Date <br> <%=movie.Released %> </li>
+                </ul>
+            </a>
+        </div>
+    <%}); %>    
+        </div>
+    </div>
+</div>
+<%- include('footer.ejs') %>

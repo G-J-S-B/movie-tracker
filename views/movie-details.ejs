@@ -1,60 +1,59 @@
 <%- include('header.ejs') %>
 
-<div>
-    <% if (locals.movieAddedToWatched) { %>
-        <% if (movieAddedToWatched.status === "success") { %>
-            <p><%= movieAddedToWatched.message %></p>
-        <% } else if (movieAddedToWatched.status === "failed") { %>
-            <p><%= movieAddedToWatched.message %></p>
-        <% } %>
-    <% } %>
-</div>
+<div class="main">
+    <div class="container">  
+        <div>
 
-<div class="container">  
-        <!-- Side nav Code START -->
-<div class="movie-details-screen">
-        <div class="movie-side-nav">
-            <img src="<%= movieData.Poster %>" alt="title">
-            <div class="sidebar-content">
-                <h2><%= movieData.Title %> </h2>
-                <div class="sidebar-content-inner">
-                    <p>Type: <%= movieData.Type %></p>
+        </div>
+            <!-- Side nav Code START -->
+        <div class="movie-details-screen">
+            <div class="movie-side-nav">
+                <img src="<%= movieData.Poster %>" alt="title">
+                <div class="sidebar-content">
+                    <h2><%= movieData.Title %> </h2>
+                    <div class="sidebar-content-inner">
+                        <p>Type: <%= movieData.Type %></p>
+                        <span class="vertical-bar"></span>
+                        <p>Year: <%= movieData.Year %></p>
+                    </div>
+                </div>    
+            </div>
+            <!-- Side nav Code END -->
+    
+            <!-- main content code START-->
+            <div class="movie-details-content">
+                <h1>About the Movie</h1>
+                <h2><%= movieData.Title %></h2>
+                <div class="movie-details-content-inner">
+                    <p>Genre : <%= movieData.Genre %></p>
                     <span class="vertical-bar"></span>
-                    <p>Year: <%= movieData.Year %></p>
+                    <p>Type : <%= movieData.Type %></p>
+                    <span class="vertical-bar"></span>
+                    <p>Released : <%= movieData.Released %></p>
                 </div>
-            </div>    
+                <h2>Plot</h2>
+                <p>Plot : <%= movieData.Plot %></p>
+                <div class="movie-casts">
+                    <h3>Cast</h3>
+                    <p><%= movieData.Actors %></p>
+                </div>
+                
+                <div class="movie-buttons">
+                    <% if (pagetype == "new-movie"){%>
+                        <a class="btn watch-list" href="/add-to-watchlist" id="mark-to-watch">Add to Watchlist</a>
+                        <a class="btn watched" href="/add-to-watched" id="mark-watched">Watched</a>
+                    <% } else if (pagetype == "view-movie"){ %>
+                        <% if (listType == 'watched-movies'){%>
+                            <a class="btn delete" href="watched-movies/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
+                        <% } else if (listType === 'watch-list'){%>
+                            <a class="btn delete" href="watch-list/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
+                        <% } %>
+                    <%}%>
+                </div>
+            </div>
+            <!-- main content code END-->
         </div>
-        <!-- Side nav Code END -->
-
-        <!-- main content code START-->
-        <div class="movie-details-content">
-            <h1>About the Movie</h1>
-            <h2><%= movieData.Title %></h2>
-            <div class="movie-details-content-inner">
-                <p>Genre : <%= movieData.Genre %></p>
-                <span class="vertical-bar"></span>
-                <p>Type : <%= movieData.Type %></p>
-                <span class="vertical-bar"></span>
-                <p>Released : <%= movieData.Released %></p>
-            </div>
-            <h2>Plot</h2>
-            <p>Plot : <%= movieData.Plot %></p>
-            <div class="movie-casts">
-                <h3>Cast</h3>
-                <p><%= movieData.Actors %></p>
-            </div>
-            <div class="movie-buttons">
-                <a class="watchlist-btn" href="/add-to-watchlist" id="mark-to-watch">Add to Watchlist</a>
-                <a class="watched-btn" href="/add-to-watched" id="mark-watched">Watched</a>
-            </div>
-        </div>
-        <!-- main content code END-->
     </div>
 </div>
 
-<script>
-    function asd(){
-        
-    };
-</script>
 <%- include('footer.ejs') %>

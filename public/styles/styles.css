@@ -36,6 +36,10 @@ input {
 	margin: auto;
 }
 
+.main {
+	min-height: calc(100vh - 170px);
+}
+
 header {
 	top: 0;
 	background: linear-gradient(
@@ -124,8 +128,6 @@ footer {
 .movie-details-screen {
 	display: flex;
 	justify-content: center;
-	width: 80%;
-	height: 74vh;
 	margin: auto;
 	padding: 10px 0px;
 }
@@ -205,31 +207,36 @@ footer {
 	margin-top: 30px;
 }
 
-.watchlist-btn {
+.btn {
 	border-radius: 20px;
 	padding: 5px 15px;
-	background-color: #002c64;
 	color: white;
 	font-size: 18px;
 	text-decoration: none;
 }
 
-.watchlist-btn:hover {
+.btn:last-child {
+	margin-left: 15px;
+}
+
+.btn:hover {
 	cursor: pointer;
 }
 
-.watched-btn {
-	border-radius: 20px;
-	padding: 5px 15px;
-	background-color: #0c6600;
-	color: white;
-	margin-left: 20px;
-	font-size: 18px;
-	text-decoration: none;
+.movie-buttons a img {
+	height: 20px;
 }
 
-.watched-btn:hover {
-	cursor: pointer;
+.watch-list {
+	background-color: #448790;
+}
+
+.delete {
+	background-color: #bb5656;
+}
+
+.watched {
+	background-color: #4d924d;
 }
 
 /* Watched List CSS */
@@ -275,4 +282,34 @@ footer {
 
 .entry img {
 	height: 150px;
+}
+
+/* homepage card css */
+
+.homepage-cards {
+	display: flex;
+	justify-content: space-between;
+	width: 50%;
+	margin: auto;
+	padding: 10%;
+}
+
+.card {
+	min-height: 150px;
+	min-width: 150px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 25px;
+	padding: 20px;
+	background-color: white;
+	box-shadow: #202020, 10px, 10px, 10px;
+	text-decoration: none;
+	color: black;
+}
+
+.card img {
+	height: 100px;
+	padding-bottom: 10px;
 }
