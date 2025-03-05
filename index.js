@@ -5,6 +5,7 @@ import express, { query } from 'express';
 import { fileURLToPath } from 'url'
 import path from 'path';
 import ejs from 'ejs'
+import { type } from "os";
 
 
 const app = express();
@@ -117,21 +118,23 @@ async function getWatchListBasedOnId(id)
 async function deleteWatchedMovieById(page, id)
 {
 
-    if (page == 'watched-movies')
+    if (page == "watched-movies")
     {
+        console.log('I was watched-movies')
         try
         {
-            await db.query('DELETE FROM watched_movie WHERE imdbid = S1;', [id])
+            await db.query("DELETE FROM watched_movies WHERE imdbid=$1;", [id])
         } catch (error)
         {
             console.error(error)
         }
     }
-    else if (page == 'watched-movies')
+    else if (page == "watch-list")
     {
+        console.log('I was to-watch')
         try
         {
-            await db.query('DELETE FROM watch-list WHERE imdbid = S1;', [id])
+            await db.query("DELETE FROM to_watch WHERE imdbid=$1;", [id])
         } catch (error)
         {
             console.error(error)
@@ -162,14 +165,16 @@ app.get('/search', async (req, res) =>
 
 app.get('/watched-movies', async (req, res) =>
 {
+    const listType = "watched-movies";
     let moviesDetails = await getWatchedMovieListBasedOnId(currentUserId);
-    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: 'watched-movies' })
+    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType })
 });
 
 app.get('/watch-list', async (req, res) =>
 {
-    let moviesDetails = await getWatchedMovieListBasedOnId(currentUserId);
-    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: 'watched-movies' })
+    const listType = "watch-list";
+    let moviesDetails = await getWatchListBasedOnId(currentUserId);
+    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType })
 
 });
 
@@ -243,22 +248,37 @@ app.get('/add-to-watchlist', async (req, res) =>
     res.redirect('/watch-list')
 })
 
-app.get('/delete/:id', async (req, res) =>
+app.get('/watched-movies/delete/:id', async (req, res) =>
 {
     const page = "watched-movies";
     const id = req.params.id;
+    console.log(id)
 
-    await deleteWatchedMovieById(page, id)
+    try
+    {
+        await deleteWatchedMovieById(page, id)
+    } catch (error)
+    {
+        console.error(error)
+    }
+
+
     res.redirect('/watched-movies')
 })
 
-app.get('/delete/:id', async (req, res) =>
+app.get('/watch-list/delete/:id', async (req, res) =>
 {
     const page = "watch-list";
     const id = req.params.id;
 
-    await deleteWatchedMovieById(page, id)
-    res.redirect('/watched-movies')
+    try
+    {
+        await deleteWatchedMovieById(page, id)
+    } catch (error)
+    {
+        console.error(error)
+    }
+    res.redirect('/watch-list')
 })
 
 app.listen(port, () =>

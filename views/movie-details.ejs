@@ -44,9 +44,9 @@
                         <a class="btn watched" href="/add-to-watched" id="mark-watched">Watched</a>
                     <% } else if (pagetype == "view-movie"){ %>
                         <% if (listType == 'watched-movies'){%>
-                            <a class="btn delete" href="watched-movies/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
+                            <a class="btn delete" href="/watched-movies/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
                         <% } else if (listType === 'watch-list'){%>
-                            <a class="btn delete" href="watch-list/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
+                            <a class="btn delete" href="/watch-list/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
                         <% } %>
                     <%}%>
                 </div>
