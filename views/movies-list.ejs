@@ -3,26 +3,61 @@
 <div class="main">
     <div class="container">
         <div class="watched-list">
-            <h1>Watched movies</h1>
-    <% moviesDetails.forEach(movie => {%> 
-        <div class="entry">
-         <% if (listType == 'watched-movies') {%>
-            <a href="/watched-movies/view/<%= movie.imdbID%>">
-            <% } 
-            else if (listType == 'watch-list') {%>
-            <a href="/watch-list/view/<%= movie.imdbID%>">
-        <% }%>
-
-                <ul>
-                    <li><img src="<%=movie.Poster %>" alt=""></li>
-                    <li>Title <br> <%=movie.Title %> </li>
-                    <li>Genre <br> <%=movie.Genre %> </li>
-                    <li>Release Date <br> <%=movie.Released %> </li>
-                </ul>
-            </a>
-        </div>
-    <%}); %>    
+            <div class="entry">
+            <% moviesDetails.forEach(movie => {%> 
+                    <ul>
+                        <li><img src="<%=movie.Poster %>" alt=""></li>
+                        <li>Title <br> <%=movie.Title %> </li>
+                        <li>Genre <br> <%=movie.Genre %> </li>
+                        <li>Release Date <br> <%=movie.Released %> </li>
+                        <div class="list-buttons">
+                            <% if (listType == 'watched-movies') {%>
+    
+                                <a href="/watched-movies/view/<%= movie.imdbID%>" class="view btn">View</a>
+                                <button class="delete btn" onclick="deleteConfirmation('/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" alt=""></button>
+                            <% } else if (listType == 'watch-list') {%>
+                                <a href="/watch-list/view/<%= movie.imdbID%>" class="view btn" >View</a>
+                                <button class="delete btn" onclick="deleteConfirmation('/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" class="btn-img" alt=""></button>
+                            <% }%>
+                        </div>
+                    </ul>
+            <%}); %>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="popup-wrapper display-none" id="popup">
+    <div class="popup">
+        <button class="close-popup" onclick="deleteConfirmation()"><img src="/images/cross.png" alt=""></button>
+        <div class="popup-message">
+            <img src="/images/delete.png" alt="">
+            <h2>Delete movie</h2>
+            <p>Are you sure you want to delete this movie?</p>
+        </div>
+        <div class="popup-buttons">
+            <button class="btn delete" id="delete-btn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+delete deleteLink
+
+function deleteConfirmation(deleteUrl){
+    const deleteLink = deleteUrl;
+    document.getElementById('popup').classList.toggle('display-none')
+
+    document.getElementById("delete-btn").addEventListener("click", function(){
+    currentLink = window.location.href;
+    window.location.replace( currentLink + deleteLink)
+});
+
+}
+
+
+
+
+</script>
 <%- include('footer.ejs') %>

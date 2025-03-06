@@ -38,6 +38,7 @@ input {
 
 .main {
 	min-height: calc(100vh - 170px);
+	position: relative;
 }
 
 header {
@@ -207,24 +208,46 @@ footer {
 	margin-top: 30px;
 }
 
+.list-buttons {
+	margin-left: 10px;
+	display: flex;
+}
+
+.list-buttons a img,
+.list-buttons button img {
+	height: 22px;
+}
+
 .btn {
 	border-radius: 20px;
 	padding: 5px 15px;
 	color: white;
 	font-size: 18px;
 	text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .btn:last-child {
 	margin-left: 15px;
 }
 
+.btn:first-child {
+	margin-left: 0px;
+}
+
 .btn:hover {
 	cursor: pointer;
 }
 
-.movie-buttons a img {
+.movie-buttons a img,
+.movie-buttons button img {
 	height: 20px;
+}
+
+.view {
+	background-color: #627274;
 }
 
 .watch-list {
@@ -239,14 +262,16 @@ footer {
 	background-color: #4d924d;
 }
 
+.btn-img {
+	height: 22px;
+}
 /* Watched List CSS */
 
 .watched-list {
-	width: 65%;
+	width: 75%;
 	margin: 40px auto;
 }
 .entry {
-	margin: 10px;
 	border-bottom: 1px solid #202020;
 }
 
@@ -264,11 +289,12 @@ footer {
 	justify-content: space-between;
 	align-items: center;
 	list-style-type: none;
+	margin-bottom: 5px;
 }
 
 .entry ul li {
+	padding: 5px 10px;
 	width: 100%;
-	padding: 15px;
 	border-right: 1px solid #202020;
 }
 
@@ -312,4 +338,65 @@ footer {
 .card img {
 	height: 100px;
 	padding-bottom: 10px;
+}
+
+/* Delete Confirmation CSS */
+
+.popup-wrapper {
+	display: block;
+	position: fixed;
+	z-index: 99;
+	height: 100vh;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #2f327d8a;
+}
+
+.popup {
+	border-radius: 15px;
+	padding: 5px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.popup > img {
+	height: 90px;
+}
+
+.close-popup {
+	border-radius: 5px;
+	justify-content: flex-end;
+	align-self: flex-end;
+	cursor: pointer;
+	padding: 5px;
+	margin: 5px;
+}
+
+.close-popup img {
+	height: 15px;
+}
+
+.popup-message {
+	text-align: center;
+	padding: 0px 45px 15px;
+}
+
+.popup-message > img {
+	height: 90px;
+}
+
+.popup-buttons {
+	padding-bottom: 30px;
+}
+
+.display-none {
+	display: none;
 }

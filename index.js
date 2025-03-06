@@ -5,7 +5,6 @@ import express, { query } from 'express';
 import { fileURLToPath } from 'url'
 import path from 'path';
 import ejs from 'ejs'
-import { type } from "os";
 
 
 const app = express();
@@ -120,7 +119,6 @@ async function deleteWatchedMovieById(page, id)
 
     if (page == "watched-movies")
     {
-        console.log('I was watched-movies')
         try
         {
             await db.query("DELETE FROM watched_movies WHERE imdbid=$1;", [id])
@@ -131,7 +129,6 @@ async function deleteWatchedMovieById(page, id)
     }
     else if (page == "watch-list")
     {
-        console.log('I was to-watch')
         try
         {
             await db.query("DELETE FROM to_watch WHERE imdbid=$1;", [id])
@@ -185,7 +182,6 @@ app.get('/watched-movies/view/:id', async (req, res) =>
     const movieName = req.query.movie_name;
     const movieImdbId = req.params.id;
 
-    console.log()
     try
     {
         movieData = await getMovieDetails(movieName, movieImdbId);
@@ -239,7 +235,6 @@ app.get('/add-to-watchlist', async (req, res) =>
     } catch (error)
     {
         console.error(error);
-        console.log(error)
         if (error.code == '23505')
         {
             res.render('error.ejs', { error: "This movie has already been added before." })
@@ -252,7 +247,6 @@ app.get('/watched-movies/delete/:id', async (req, res) =>
 {
     const page = "watched-movies";
     const id = req.params.id;
-    console.log(id)
 
     try
     {
