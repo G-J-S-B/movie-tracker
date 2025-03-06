@@ -3,16 +3,22 @@
 <div class="main">
     <div class="container">
         <div class="watched-list">
-            <div class="entry">
+            <h1><%=title %></h1>
             <% moviesDetails.forEach(movie => {%> 
+                <div class="entry">
                     <ul>
-                        <li><img src="<%=movie.Poster %>" alt=""></li>
+                        <li>
+                        <% if (listType == 'watched-movies') {%>
+                            <a href="/watched-movies/view/<%= movie.imdbID%>"><img src="<%=movie.Poster %>" alt=""></a>
+                        <% } else if (listType == 'watch-list') {%>
+                            <a href="/watch-list/view/<%= movie.imdbID%>"><img src="<%=movie.Poster %>" alt=""></a>
+                        <% }%>
+                        </li>
                         <li>Title <br> <%=movie.Title %> </li>
                         <li>Genre <br> <%=movie.Genre %> </li>
                         <li>Release Date <br> <%=movie.Released %> </li>
                         <div class="list-buttons">
                             <% if (listType == 'watched-movies') {%>
-    
                                 <a href="/watched-movies/view/<%= movie.imdbID%>" class="view btn">View</a>
                                 <button class="delete btn" onclick="deleteConfirmation('/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" alt=""></button>
                             <% } else if (listType == 'watch-list') {%>
@@ -21,8 +27,9 @@
                             <% }%>
                         </div>
                     </ul>
+                </div>
             <%}); %>
-            </div>
+            
         </div>
     </div>
 </div>

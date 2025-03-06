@@ -163,15 +163,17 @@ app.get('/search', async (req, res) =>
 app.get('/watched-movies', async (req, res) =>
 {
     const listType = "watched-movies";
+    const pageTitle = "Watched Movies List"
     let moviesDetails = await getWatchedMovieListBasedOnId(currentUserId);
-    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType })
+    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType, title: pageTitle })
 });
 
 app.get('/watch-list', async (req, res) =>
 {
     const listType = "watch-list";
+    const pageTitle = "Watch List"
     let moviesDetails = await getWatchListBasedOnId(currentUserId);
-    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType })
+    res.render('movies-list.ejs', { moviesDetails, pagetype: 'view-movie', listType: listType, title: pageTitle })
 
 });
 
@@ -179,6 +181,7 @@ app.get('/watch-list', async (req, res) =>
 app.get('/watched-movies/view/:id', async (req, res) =>
 {
     const listType = "watched-movies";
+    const pageTitle = "Watched Movies List"
     const movieName = req.query.movie_name;
     const movieImdbId = req.params.id;
 
@@ -189,12 +192,13 @@ app.get('/watched-movies/view/:id', async (req, res) =>
     {
         console.error(error);
     }
-    res.render('movie-details.ejs', { movieData, pagetype: 'view-movie', listType: listType })
+    res.render('movie-details.ejs', { movieData, pagetype: 'view-movie', listType: listType, title: pageTitle })
 });
 
 app.get('/watch-list/view/:id', async (req, res) =>
 {
     const listType = "watch-list";
+    const pageTitle = "Watch List"
     const movieName = req.query.movie_name;
     const movieImdbId = req.params.id;
 
@@ -205,7 +209,7 @@ app.get('/watch-list/view/:id', async (req, res) =>
     {
         console.error(error);
     }
-    res.render('movie-details.ejs', { movieData, pagetype: 'view-movie', listType: listType })
+    res.render('movie-details.ejs', { movieData, pagetype: 'view-movie', listType: listType, title: pageTitle })
 });
 
 
