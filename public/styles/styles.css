@@ -3,7 +3,8 @@
 	padding: 0;
 	outline: 0;
 	border: 0;
-	box-shadow: 0;
+	box-shadow: none;
+	background: none;
 }
 body {
 	position: relative;
@@ -54,6 +55,7 @@ header {
 
 .nav-logo a {
 	color: white;
+	text-decoration: none;
 }
 
 .nav-logo img {
@@ -78,11 +80,21 @@ header {
 	display: flex;
 	align-items: center;
 	position: relative;
+	background-color: none;
+}
+
+.search-icon {
+	height: 22px;
+	position: absolute;
+	z-index: 99;
+	right: 10px;
+	cursor: pointer;
+	padding: 2px 5px;
 }
 
 .search-button svg {
-	height: 20px;
-	fill: white;
+	fill: #000000;
+	height: 100%;
 	margin-left: 5px;
 }
 
@@ -393,7 +405,7 @@ footer {
 
 .popup-message {
 	text-align: center;
-	padding: 0px 45px 15px;
+	padding: 20px 45px 15px;
 }
 
 .popup-message > img {
@@ -401,7 +413,8 @@ footer {
 }
 
 .popup-buttons {
-	padding-bottom: 30px;
+	display: flex;
+	padding-bottom: 20px;
 }
 
 .display-none {

@@ -2,9 +2,20 @@
 
 <div class="main">
     <div class="container">  
-        <div>
-
+    <% if ( movieData.Error){%>
+        <div class="popup-wrapper" id="popup">
+            <div class="popup">
+                <div class="popup-message">
+                    <img src="/images/error.png" alt="">
+                    <h2><%= movieData.Error %></h2>
+                    <p>You will be redirected to the home screen</p>
+                </div>
+                <div class="popup-buttons">
+                    <a class="btn view" id="redirect-homepage-btn" href="/">Go back</a>
+                </div>
+            </div>
         </div>
+    <%} else {%>
             <!-- Side nav Code START -->
         <div class="movie-details-screen">
             <div class="movie-side-nav">
@@ -44,16 +55,48 @@
                         <a class="btn watched" href="/add-to-watched" id="mark-watched">Watched</a>
                     <% } else if (pagetype == "view-movie"){ %>
                         <% if (listType == 'watched-movies'){%>
-                            <a class="btn delete" href="/watched-movies/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
-                        <% } else if (listType === 'watch-list'){%>
-                            <a class="btn delete" href="/watch-list/delete/<%= movieData.imdbID %>" id="delete-btn"> <img src="/images/trash.png" alt=""> Delete</a>
+                            <button class="delete btn" onclick="deleteConfirmation('/watched-movies/delete/<%= movieData.imdbID%>')"><img src="/images/trash.png" alt=""></button>
+                            <% } else if (listType === 'watch-list'){%>
+                            <button class="delete btn" onclick="deleteConfirmation('/watch-list/delete/<%= movieData.imdbID%>')"><img src="/images/trash.png" class="btn-img" alt=""></button>
                         <% } %>
                     <%}%>
                 </div>
             </div>
             <!-- main content code END-->
         </div>
+        <%}%>
     </div>
 </div>
+
+<div class="popup-wrapper display-none" id="popup">
+    <div class="popup">
+        <button class="close-popup" onclick="deleteConfirmation()"><img src="/images/cross.png" alt=""></button>
+        <div class="popup-message">
+            <img src="/images/delete.png" alt="">
+            <h2>Delete movie</h2>
+            <p>Are you sure you want to delete this movie?</p>
+        </div>
+        <div class="popup-buttons">
+            <button class="btn view" onclick="deleteConfirmation()">Cancel</button>
+            <button class="btn delete" id="delete-btn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function deleteConfirmation(deleteUrl){
+    const deleteLink = deleteUrl;
+    document.getElementById('popup').classList.toggle('display-none')
+    
+    document.getElementById("delete-btn").addEventListener("click", function(){
+    const base_url = window.location.origin
+    window.location.replace(base_url + deleteLink)
+})};
+
+function displayError(){
+     document.getElementById('popup').classList.toggle('display-none')
+     window.location.replace(deleteLink)
+}  
+</script>
 
 <%- include('footer.ejs') %>

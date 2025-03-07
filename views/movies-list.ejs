@@ -20,10 +20,10 @@
                         <div class="list-buttons">
                             <% if (listType == 'watched-movies') {%>
                                 <a href="/watched-movies/view/<%= movie.imdbID%>" class="view btn">View</a>
-                                <button class="delete btn" onclick="deleteConfirmation('/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" alt=""></button>
+                                <button class="delete btn" onclick="deleteConfirmation('/watched-movies/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" alt=""></button>
                             <% } else if (listType == 'watch-list') {%>
                                 <a href="/watch-list/view/<%= movie.imdbID%>" class="view btn" >View</a>
-                                <button class="delete btn" onclick="deleteConfirmation('/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" class="btn-img" alt=""></button>
+                                <button class="delete btn" onclick="deleteConfirmation('/watch-list/delete/<%= movie.imdbID%>')"><img src="/images/trash.png" alt=""></button>
                             <% }%>
                         </div>
                     </ul>
@@ -43,22 +43,20 @@
             <p>Are you sure you want to delete this movie?</p>
         </div>
         <div class="popup-buttons">
+            <button class="btn view" onclick="deleteConfirmation()">Cancel</button>
             <button class="btn delete" id="delete-btn">Delete</button>
         </div>
     </div>
 </div>
 
 <script>
-
-delete deleteLink
-
 function deleteConfirmation(deleteUrl){
     const deleteLink = deleteUrl;
     document.getElementById('popup').classList.toggle('display-none')
-
+    
     document.getElementById("delete-btn").addEventListener("click", function(){
-    currentLink = window.location.href;
-    window.location.replace( currentLink + deleteLink)
+    const base_url = window.location.origin
+    window.location.replace(base_url + deleteLink)
 });
 
 }

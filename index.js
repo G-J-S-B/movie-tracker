@@ -34,14 +34,41 @@ async function getMovieDetails(name, id)
     {
         if (name && !id)
         {
-            const movieName = `&t=${name}`;
-            const response = await axios.get(apiUrl + apiKey + movieName);
-            return response.data;
+            try
+            {
+                const movieName = `&t=${name}`;
+                const response = await axios.get(apiUrl + apiKey + movieName);
+                if (response.data.Error)
+                {
+                    const imdbid = `&i=${name}`;
+                    const response = await axios.get(apiUrl + apiKey + imdbid);
+                    return response.data;
+                }
+                else
+                {
+                    return response.data;
+                }
+
+
+            } catch (error)
+            {
+                console.error(error)
+                return error
+            }
+
         } else if (id && !name)
         {
-            const imdbid = `&i=${id}`;
-            const response = await axios.get(apiUrl + apiKey + imdbid);
-            return response.data;
+            try
+            {
+                const imdbid = `&i=${id}`;
+                const response = await axios.get(apiUrl + apiKey + imdbid);
+                return response.data;
+            } catch (error)
+            {
+                console.error(error)
+                return error
+            }
+
         } else
         {
             throw new Error("Either 'name' or 'imdbid' should be provided, but not both.");
@@ -156,6 +183,7 @@ app.get('/search', async (req, res) =>
     } catch (error)
     {
         console.error(error);
+
     }
     res.render('movie-details.ejs', { movieData, pagetype: 'new-movie' })
 });
